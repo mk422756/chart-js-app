@@ -37,8 +37,16 @@ export default function Home(props: Props) {
         <section style={{ padding: "10pt" }}>
           <h1>chart-js-app</h1>
           <p>シリアルのデータ</p>
-          <ParamSelectBox value={xParam} onChange={changeXparam} />
-          <ParamSelectBox value={yParam} onChange={changeYparam} />
+          <ParamSelectBox
+            value={xParam}
+            label={"X軸"}
+            onChange={changeXparam}
+          />
+          <ParamSelectBox
+            value={yParam}
+            label={"Y軸"}
+            onChange={changeYparam}
+          />
           <ChartBox cereals={props.cereals} xParam={xParam} yParam={yParam} />
         </section>
       </main>
