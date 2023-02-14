@@ -69,7 +69,7 @@ export default function ChartBox(props: Props) {
     return () => {
       myChart.destroy()
     }
-  }, [props.xParam, props.yParam])
+  }, [props.xParam, props.yParam, props.cereals])
 
   return (
     <div style={{ width: "400pt" }}>
