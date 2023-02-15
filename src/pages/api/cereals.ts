@@ -1,10 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { cereals } from '../../constants/cereals'
+import type { NextApiRequest, NextApiResponse } from "next"
+import GetCerealUsecase from "src/server/usecase/get-cereal-usecase"
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  res.status(200).json(cereals)
+  const usecase = new GetCerealUsecase()
+
+  try {
+    const cereals = await usecase.handle()
+    res.status(200).json(cereals)
+  } catch (e) {
+    console.log(e)
+    res.status(500).send("Internal Server Error")
+  }
 }
