@@ -14,6 +14,10 @@ export const cerealKeys = [
   "rating",
 ]
 
+export const mfrKeys = ["ALL", "A", "G", "K", "N", "P", "Q", "R"]
+
+export const typeKeys = ["ALL", "C", "H"]
+
 export const cereals = [
   {
     name: "100% Bran",

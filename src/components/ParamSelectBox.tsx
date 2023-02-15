@@ -5,6 +5,7 @@ import { capitalizeFirstLetter } from "src/util/util"
 interface Props {
   value: string
   label: string
+  optionsValue: string[]
   onChange: ChangeEventHandler<HTMLSelectElement>
 }
 export default function ParamSelectBox(props: Props) {
@@ -13,7 +14,7 @@ export default function ParamSelectBox(props: Props) {
       <label>
         {props.label}:
         <select value={props.value} onChange={props.onChange}>
-          {cerealKeys.map((cereal) => {
+          {props.optionsValue.map((cereal) => {
             return (
               <option key={cereal} value={cereal}>
                 {capitalizeFirstLetter(cereal)}

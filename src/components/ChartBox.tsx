@@ -20,7 +20,7 @@ export default function ChartBox(props: Props) {
       data: {
         datasets: [
           {
-            label: "80 Cereals",
+            label: `${props.cereals.length} Cereals`,
             backgroundColor: "rgb(255, 99, 132)",
             data: cereals,
           },
