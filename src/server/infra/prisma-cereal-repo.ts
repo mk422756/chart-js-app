@@ -1,14 +1,15 @@
 import { CerealRepo } from "../domain/cereal-repo"
-import { cereals } from "../../constants/cereals"
 import Cereal from "../domain/cereal"
+import { prisma } from "./prisma"
 
-export default class FileCerealRepo implements CerealRepo {
+export default class PrismaCerealRepo implements CerealRepo {
   async get(): Promise<Cereal[]> {
+    const cereals = await prisma.cereals.findMany()
     return cereals.map((cereal) => {
       return new Cereal({
-        name: cereal.name,
-        mfr: cereal.mfr,
-        type: cereal.type,
+        name: cereal.name || "",
+        mfr: cereal.mfr || "",
+        type: cereal.type || "",
         calories: Number(cereal.calories),
         protein: Number(cereal.protein),
         fat: Number(cereal.fat),

@@ -1,11 +1,11 @@
 import { CerealRepo } from "../domain/cereal-repo"
-import FileCerealRepo from "../infra/file-cereal-repo"
+import PrismaCerealRepo from "../infra/prisma-cereal-repo"
 
 export default class GetCerealUsecase {
   private repo: CerealRepo
 
   constructor() {
-    this.repo = new FileCerealRepo()
+    this.repo = new PrismaCerealRepo()
   }
 
   handle() {
