@@ -3,7 +3,8 @@ import { cereals } from "../../constants/cereals"
 import Cereal from "../domain/cereal"
 
 export default class FileCerealRepo implements CerealRepo {
-  async create(cereal: Cereal): Promise<void> {}
+  async update(cereal: Cereal): Promise<void> { }
+  async create(cereal: Cereal): Promise<void> { }
 
   async get(): Promise<Cereal[]> {
     return cereals.map((cereal) => {

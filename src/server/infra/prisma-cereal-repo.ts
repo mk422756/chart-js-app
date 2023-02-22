@@ -3,6 +3,28 @@ import Cereal from "../domain/cereal"
 import { prisma } from "./prisma"
 
 export default class PrismaCerealRepo implements CerealRepo {
+  async update(cereal: Cereal): Promise<void> {
+    await prisma.cereals.updateMany({
+      where: { name: cereal.name }, data: {
+        mfr: cereal.mfr,
+        type: cereal.type,
+        calories: cereal.calories,
+        protein: cereal.protein,
+        fat: cereal.fat,
+        sodium: cereal.sodium,
+        fiber: cereal.fiber,
+        carbo: cereal.carbo,
+        sugars: cereal.sugars,
+        potass: cereal.potass,
+        vitamins: cereal.vitamins,
+        shelf: cereal.shelf,
+        weight: cereal.weight,
+        cups: cereal.cups,
+        rating: cereal.rating,
+      }
+    })
+  }
+
   async create(cereal: Cereal): Promise<void> {
     await prisma.cereals.create({
       data: {
