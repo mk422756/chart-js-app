@@ -1,0 +1,245 @@
+openapi: 3.0.3
+
+info:
+  title: chart-js-app API
+  description: chart-js-app API
+  version: 1.0.0
+servers:
+    - url: 'http://localhost:3000'
+      description: 開発環境
+paths:
+  '/api/cereals':
+    get:
+      description: シリアル一覧取得
+      operationId: CerealsShow
+      tags:
+        - cereals
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    mfr:
+                      type: string
+                    type:
+                      type: string
+                    calories:
+                      type: integer
+                    protein:
+                      type: integer
+                    fat:
+                      type: integer
+                    sodium:
+                      type: integer
+                    fiber:
+                      type: integer
+                    carbo:
+                      type: integer
+                    sugars:
+                      type: integer
+                    potass:
+                      type: integer
+                    vitamins:
+                      type: integer
+                    shelf:
+                      type: integer
+                    weight:
+                      type: integer
+                    cups:
+                      type: integer
+                    rating:
+                      type: integer
+        '500':
+          description: サーバーエラー
+    post:
+      description: シリアル追加
+      operationId: CerealsCreate
+      tags:
+        - cereals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  name:
+                    type: string
+                  mfr:
+                    type: string
+                  type:
+                    type: string
+                  calories:
+                    type: integer
+                  protein:
+                    type: integer
+                  fat:
+                    type: integer
+                  sodium:
+                    type: integer
+                  fiber:
+                    type: integer
+                  carbo:
+                    type: integer
+                  sugars:
+                    type: integer
+                  potass:
+                    type: integer
+                  vitamins:
+                    type: integer
+                  shelf:
+                    type: integer
+                  weight:
+                    type: integer
+                  cups:
+                    type: integer
+                  rating:
+                    type: integer
+      responses:
+        '200':
+          description: 成功時
+        '400':
+          description: バリデーションエラー
+        '500':
+          description: サーバーエラー
+  '/api/cereals/{serealName}':
+    get:
+      description: シリアル取得
+      operationId: CerealGet
+      tags:
+        - cereals
+      parameters:
+        - in: path
+          name: serealName
+          schema:
+            type: string
+          required: true
+          description: シリアル名
+      responses:
+        '200':
+          description: 成功時
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  mfr:
+                    type: string
+                  type:
+                    type: string
+                  calories:
+                    type: integer
+                  protein:
+                    type: integer
+                  fat:
+                    type: integer
+                  sodium:
+                    type: integer
+                  fiber:
+                    type: integer
+                  carbo:
+                    type: integer
+                  sugars:
+                    type: integer
+                  potass:
+                    type: integer
+                  vitamins:
+                    type: integer
+                  shelf:
+                    type: integer
+                  weight:
+                    type: integer
+                  cups:
+                    type: integer
+                  rating:
+                    type: integer
+        '404':
+          description: シリアルが存在しないエラー
+        '500':
+          description: サーバーエラー
+    put:
+      description: シリアル更新
+      operationId: CerealsUpdate
+      tags:
+        - cereals
+      parameters:
+        - in: path
+          name: serealName
+          schema:
+            type: string
+          required: true
+          description: シリアル名
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                  mfr:
+                    type: string
+                  type:
+                    type: string
+                  calories:
+                    type: integer
+                  protein:
+                    type: integer
+                  fat:
+                    type: integer
+                  sodium:
+                    type: integer
+                  fiber:
+                    type: integer
+                  carbo:
+                    type: integer
+                  sugars:
+                    type: integer
+                  potass:
+                    type: integer
+                  vitamins:
+                    type: integer
+                  shelf:
+                    type: integer
+                  weight:
+                    type: integer
+                  cups:
+                    type: integer
+                  rating:
+                    type: integer
+      responses:
+        '200':
+          description: 成功時
+        '400':
+          description: バリデーションエラー
+        '404':
+          description: シリアルが存在しないエラー
+        '500':
+          description: サーバーエラー
+    delete:
+      description: シリアル削除
+      operationId: CerealDelete
+      tags:
+        - cereals
+      parameters:
+        - in: path
+          name: serealName
+          schema:
+            type: string
+          required: true
+          description: シリアル名
+      responses:
+        '200':
+          description: 成功時
+        '404':
+          description: シリアルが存在しないエラー
+        '500':
+          description: サーバーエラー
