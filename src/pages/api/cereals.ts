@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
+import PrismaCerealRepo from "src/server/infra/prisma-cereal-repo";
 import CreateCerealUsecase from "src/server/usecase/create-cereal-usecase";
 import GetCerealUsecase from "src/server/usecase/get-cereal-usecase"
 
@@ -11,7 +12,7 @@ export default async function handler(
 
   switch (method) {
     case 'GET':
-      const getUsecase = new GetCerealUsecase()
+      const getUsecase = new GetCerealUsecase(new PrismaCerealRepo())
       try {
         const cereals = await getUsecase.handle()
         res.status(200).json(cereals)
@@ -21,7 +22,7 @@ export default async function handler(
       }
       break;
     case 'POST':
-      const createUsecase = new CreateCerealUsecase()
+      const createUsecase = new CreateCerealUsecase(new PrismaCerealRepo())
       try {
         await createUsecase.handle({
           name: req.body.name,
