@@ -3,8 +3,11 @@ import Cereal from "../domain/cereal"
 import NotFoundError from "../domain/error/not-found-error"
 
 export default class InMemoryCerealRepo implements CerealRepo {
-
   cereals: Cereal[] = []
+
+  async delete(cereal: Cereal): Promise<void> {
+    this.cereals = this.cereals.filter(c => c.name !== cereal.name)
+  }
 
   async update(cereal: Cereal): Promise<void> {
     this.cereals = this.cereals.map(c => {

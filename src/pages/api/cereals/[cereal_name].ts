@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import NotFoundError from "src/server/domain/error/not-found-error";
 import PrismaCerealRepo from "src/server/infra/prisma-cereal-repo";
+import DeleteCerealUsecase from "src/server/usecase/delete-cereal-usecase";
 import GetCerealUsecase from "src/server/usecase/get-cereal-usecase";
 import UpdateCerealUsecase from "src/server/usecase/update-cereal-usecase";
 
@@ -48,6 +49,20 @@ export default async function handler(
           cups: req.body.cups,
           rating: req.body.rating,
         })
+        res.status(200).send("Success")
+      } catch (e) {
+        console.log(e)
+        if (e instanceof NotFoundError) {
+          res.status(404).send("Not Found")
+        } else {
+          res.status(500).send("Internal Server Error")
+        }
+      }
+      break;
+    case 'DELETE':
+      const deleteUsecase = new DeleteCerealUsecase(new PrismaCerealRepo())
+      try {
+        await deleteUsecase.handle(String(cereal_name))
         res.status(200).send("Success")
       } catch (e) {
         console.log(e)

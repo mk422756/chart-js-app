@@ -4,6 +4,9 @@ import { prisma } from "./prisma"
 import NotFoundError from "../domain/error/not-found-error"
 
 export default class PrismaCerealRepo implements CerealRepo {
+  async delete(cereal: Cereal): Promise<void> {
+    await prisma.cereals.deleteMany({ where: { name: cereal.name } })
+  }
 
   async update(cereal: Cereal): Promise<void> {
     await prisma.cereals.updateMany({

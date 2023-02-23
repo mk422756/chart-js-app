@@ -5,6 +5,7 @@ import NotFoundError from "../domain/error/not-found-error"
 
 export default class FileCerealRepo implements CerealRepo {
 
+  async delete(cereal: Cereal): Promise<void> { }
   async update(cereal: Cereal): Promise<void> { }
   async create(cereal: Cereal): Promise<void> { }
   async getByName(name: string): Promise<Cereal> {
