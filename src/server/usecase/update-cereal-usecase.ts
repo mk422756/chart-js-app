@@ -27,8 +27,9 @@ export default class UpdateCerealUsecase {
     this.repo = repo
   }
 
-  handle(input: UpdateCerealUsecaseInput) {
-    const cereal = new Cereal(input)
-    return this.repo.update(cereal)
+  async handle(input: UpdateCerealUsecaseInput) {
+    const cereal = await this.repo.getByName(input.name)
+    const updated = cereal.update(input)
+    await this.repo.update(updated)
   }
 }

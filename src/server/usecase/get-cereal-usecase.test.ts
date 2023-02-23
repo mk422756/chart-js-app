@@ -1,3 +1,4 @@
+import Cereal from "../domain/cereal";
 import NotFoundError from "../domain/error/not-found-error";
 import InMemoryCerealRepo from "../infra/in-memory-cereal-repo";
 import GetCerealUsecase from "./get-cereal-usecase";
@@ -6,15 +7,15 @@ test('シリアルの個別取得が成功する', async () => {
   const repo = new InMemoryCerealRepo()
   const usecase = new GetCerealUsecase(repo)
 
-  repo.cereals.push({
+  repo.cereals.push(new Cereal({
     name: "test1", mfr: "A", type: "C", calories: 1, carbo: 2, cups: 3, fat: 4, fiber: 5, potass: 6, protein: 7, rating: 8, shelf: 9, sodium: 10, sugars: 11, vitamins: 12, weight: 13,
-  })
-  repo.cereals.push({
+  }))
+  repo.cereals.push(new Cereal({
     name: "test2", mfr: "A", type: "C", calories: 1, carbo: 2, cups: 3, fat: 4, fiber: 5, potass: 6, protein: 7, rating: 8, shelf: 9, sodium: 10, sugars: 11, vitamins: 12, weight: 13,
-  })
-  repo.cereals.push({
+  }))
+  repo.cereals.push(new Cereal({
     name: "test3", mfr: "A", type: "C", calories: 1, carbo: 2, cups: 3, fat: 4, fiber: 5, potass: 6, protein: 7, rating: 8, shelf: 9, sodium: 10, sugars: 11, vitamins: 12, weight: 13,
-  })
+  }))
 
   const cereal = await usecase.handle("test1")
 
@@ -27,9 +28,9 @@ test('シリアルが取得できない場合はErrorが投げられる', async 
   const repo = new InMemoryCerealRepo()
   const usecase = new GetCerealUsecase(repo)
 
-  repo.cereals.push({
+  repo.cereals.push(new Cereal({
     name: "test1", mfr: "A", type: "C", calories: 1, carbo: 2, cups: 3, fat: 4, fiber: 5, potass: 6, protein: 7, rating: 8, shelf: 9, sodium: 10, sugars: 11, vitamins: 12, weight: 13,
-  })
+  }))
 
-  expect(() => usecase.handle("test2")).toThrow(new NotFoundError());
+  expect(() => usecase.handle("test2")).rejects.toThrow(new NotFoundError());
 })

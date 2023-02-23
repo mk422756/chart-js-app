@@ -19,8 +19,8 @@ export default class InMemoryCerealRepo implements CerealRepo {
     this.cereals.push(cereal)
   }
 
-  getByName(name: string): Promise<Cereal> {
-    const arr = JSON.parse(JSON.stringify(this.cereals))
+  async getByName(name: string): Promise<Cereal> {
+    const arr = this.cereals.map(cereal => new Cereal(cereal))
     const ret = arr.filter((cereal: Cereal) => cereal.name === name)
     if (ret.length === 0) {
       throw new NotFoundError()
@@ -29,6 +29,6 @@ export default class InMemoryCerealRepo implements CerealRepo {
   }
 
   async get(): Promise<Cereal[]> {
-    return JSON.parse(JSON.stringify(this.cereals))
+    return this.cereals.map(cereal => new Cereal(cereal))
   }
 }

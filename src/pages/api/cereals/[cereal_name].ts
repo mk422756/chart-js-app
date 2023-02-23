@@ -51,7 +51,11 @@ export default async function handler(
         res.status(200).send("Success")
       } catch (e) {
         console.log(e)
-        res.status(500).send("Internal Server Error")
+        if (e instanceof NotFoundError) {
+          res.status(404).send("Not Found")
+        } else {
+          res.status(500).send("Internal Server Error")
+        }
       }
       break;
     default:

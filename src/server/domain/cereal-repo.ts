@@ -1,4 +1,4 @@
-import { Cereal } from "src/types/cereal"
+import Cereal from "./cereal"
 
 export interface CerealRepo {
   get(): Promise<Cereal[]>

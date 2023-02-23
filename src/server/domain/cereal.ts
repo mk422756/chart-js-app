@@ -21,6 +21,24 @@ const Schema = z.object({
 
 type Schema = z.infer<typeof Schema>
 
+interface UpdateInput {
+  mfr: string
+  type: string
+  calories: number
+  protein: number
+  fat: number
+  sodium: number
+  fiber: number
+  carbo: number
+  sugars: number
+  potass: number
+  vitamins: number
+  shelf: number
+  weight: number
+  cups: number
+  rating: number
+}
+
 export default class Cereal {
   name: string
   mfr: string
@@ -57,5 +75,9 @@ export default class Cereal {
     this.weight = schema.weight
     this.cups = schema.cups
     this.rating = schema.rating
+  }
+
+  update(input: UpdateInput): Cereal {
+    return new Cereal({ name: this.name, ...input })
   }
 }
