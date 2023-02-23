@@ -1,8 +1,9 @@
 import { Cereal } from "src/types/cereal"
+import { getBaseUrl } from "src/util/baseurl"
 
 export default class CerealClient {
   async fetch(): Promise<Cereal[]> {
-    const response = await fetch("http://localhost:3000/api/cereals")
+    const response = await fetch(`${getBaseUrl()}/api/cereals`)
     const cereals = await response.json()
     return cereals.map((cereal: any): Cereal => {
       return this.responseToCereal(cereal)
