@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
 import PrismaCerealRepo from "src/server/infra/prisma-cereal-repo";
+import GetCerealUsecase from "src/server/usecase/get-cereal-usecase";
 import UpdateCerealUsecase from "src/server/usecase/update-cereal-usecase";
 
 export default async function handler(
@@ -11,6 +12,16 @@ export default async function handler(
   const { method } = req;
 
   switch (method) {
+    case 'GET':
+      const getUsecase = new GetCerealUsecase(new PrismaCerealRepo())
+      try {
+        const cereal = await getUsecase.handle(String(cereal_name))
+        res.status(200).json(cereal)
+      } catch (e) {
+        console.log(e)
+        res.status(500).send("Internal Server Error")
+      }
+      break;
     case 'PUT':
       const updateUsecase = new UpdateCerealUsecase(new PrismaCerealRepo())
       try {

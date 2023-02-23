@@ -3,6 +3,7 @@ import Cereal from "../domain/cereal"
 import { prisma } from "./prisma"
 
 export default class PrismaCerealRepo implements CerealRepo {
+
   async update(cereal: Cereal): Promise<void> {
     await prisma.cereals.updateMany({
       where: { name: cereal.name }, data: {
@@ -45,6 +46,33 @@ export default class PrismaCerealRepo implements CerealRepo {
         cups: cereal.cups,
         rating: cereal.rating,
       }
+    })
+  }
+
+  async getByName(name: string): Promise<Cereal> {
+    const cereal = await prisma.cereals.findFirst({ where: { name: name } })
+
+    if (!cereal) {
+      throw new Error("cereal not found")
+    }
+
+    return new Cereal({
+      name: cereal.name || "",
+      mfr: cereal.mfr || "",
+      type: cereal.type || "",
+      calories: Number(cereal.calories),
+      protein: Number(cereal.protein),
+      fat: Number(cereal.fat),
+      sodium: Number(cereal.sodium),
+      fiber: Number(cereal.fiber),
+      carbo: Number(cereal.carbo),
+      sugars: Number(cereal.sugars),
+      potass: Number(cereal.potass),
+      vitamins: Number(cereal.vitamins),
+      shelf: Number(cereal.shelf),
+      weight: Number(cereal.weight),
+      cups: Number(cereal.cups),
+      rating: Number(cereal.rating),
     })
   }
 
