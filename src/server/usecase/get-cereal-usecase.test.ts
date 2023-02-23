@@ -1,3 +1,4 @@
+import NotFoundError from "../domain/error/not-found-error";
 import InMemoryCerealRepo from "../infra/in-memory-cereal-repo";
 import GetCerealUsecase from "./get-cereal-usecase";
 
@@ -30,5 +31,5 @@ test('シリアルが取得できない場合はErrorが投げられる', async 
     name: "test1", mfr: "A", type: "C", calories: 1, carbo: 2, cups: 3, fat: 4, fiber: 5, potass: 6, protein: 7, rating: 8, shelf: 9, sodium: 10, sugars: 11, vitamins: 12, weight: 13,
   })
 
-  expect(() => usecase.handle("test2")).toThrow();
+  expect(() => usecase.handle("test2")).toThrow(new NotFoundError());
 })

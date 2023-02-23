@@ -1,6 +1,7 @@
 import { CerealRepo } from "../domain/cereal-repo"
 import Cereal from "../domain/cereal"
 import { prisma } from "./prisma"
+import NotFoundError from "../domain/error/not-found-error"
 
 export default class PrismaCerealRepo implements CerealRepo {
 
@@ -53,7 +54,7 @@ export default class PrismaCerealRepo implements CerealRepo {
     const cereal = await prisma.cereals.findFirst({ where: { name: name } })
 
     if (!cereal) {
-      throw new Error("cereal not found")
+      throw new NotFoundError()
     }
 
     return new Cereal({

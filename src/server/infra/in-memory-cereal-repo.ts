@@ -1,5 +1,6 @@
 import { CerealRepo } from "../domain/cereal-repo"
 import Cereal from "../domain/cereal"
+import NotFoundError from "../domain/error/not-found-error"
 
 export default class InMemoryCerealRepo implements CerealRepo {
 
@@ -22,7 +23,7 @@ export default class InMemoryCerealRepo implements CerealRepo {
     const arr = JSON.parse(JSON.stringify(this.cereals))
     const ret = arr.filter((cereal: Cereal) => cereal.name === name)
     if (ret.length === 0) {
-      throw new Error("cereal not found")
+      throw new NotFoundError()
     }
     return ret[0]
   }

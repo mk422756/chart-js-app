@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
+import NotFoundError from "src/server/domain/error/not-found-error";
 import PrismaCerealRepo from "src/server/infra/prisma-cereal-repo";
 import GetCerealUsecase from "src/server/usecase/get-cereal-usecase";
 import UpdateCerealUsecase from "src/server/usecase/update-cereal-usecase";
@@ -19,7 +20,11 @@ export default async function handler(
         res.status(200).json(cereal)
       } catch (e) {
         console.log(e)
-        res.status(500).send("Internal Server Error")
+        if (e instanceof NotFoundError) {
+          res.status(404).send("Not Found")
+        } else {
+          res.status(500).send("Internal Server Error")
+        }
       }
       break;
     case 'PUT':

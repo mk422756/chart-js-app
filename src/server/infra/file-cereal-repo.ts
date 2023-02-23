@@ -1,6 +1,7 @@
 import { CerealRepo } from "../domain/cereal-repo"
 import { cereals } from "../../constants/cereals"
 import Cereal from "../domain/cereal"
+import NotFoundError from "../domain/error/not-found-error"
 
 export default class FileCerealRepo implements CerealRepo {
 
@@ -9,7 +10,7 @@ export default class FileCerealRepo implements CerealRepo {
   async getByName(name: string): Promise<Cereal> {
     const ret = cereals.filter(cereal => cereal.name === name)
     if (ret.length === 0) {
-      throw new Error("cereal not found")
+      throw new NotFoundError()
     }
     return new Cereal({
       name: ret[0].name,
