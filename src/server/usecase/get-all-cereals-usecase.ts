@@ -1,6 +1,6 @@
 import { CerealRepo } from "../domain/cereal-repo"
 
-export default class GetCerealUsecase {
+export default class GetAllCerealsUsecase {
   private repo: CerealRepo
 
   constructor(repo: CerealRepo) {

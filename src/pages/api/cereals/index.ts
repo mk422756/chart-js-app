@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import PrismaCerealRepo from "src/server/infra/prisma-cereal-repo";
 import CreateCerealUsecase from "src/server/usecase/create-cereal-usecase";
-import GetCerealUsecase from "src/server/usecase/get-cereal-usecase"
+import GetAllCerealsUsecase from "src/server/usecase/get-all-cereals-usecase"
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +12,7 @@ export default async function handler(
 
   switch (method) {
     case 'GET':
-      const getUsecase = new GetCerealUsecase(new PrismaCerealRepo())
+      const getUsecase = new GetAllCerealsUsecase(new PrismaCerealRepo())
       try {
         const cereals = await getUsecase.handle()
         res.status(200).json(cereals)

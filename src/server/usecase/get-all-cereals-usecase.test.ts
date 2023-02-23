@@ -1,9 +1,9 @@
 import InMemoryCerealRepo from "../infra/in-memory-cereal-repo";
-import GetCerealUsecase from "./get-cereal-usecase";
+import GetAllCerealsUsecase from "./get-all-cereals-usecase";
 
 test('シリアルの全取得が成功する', async () => {
   const repo = new InMemoryCerealRepo()
-  const usecase = new GetCerealUsecase(repo)
+  const usecase = new GetAllCerealsUsecase(repo)
 
   repo.cereals.push({
     name: "test1", mfr: "A", type: "C", calories: 1, carbo: 2, cups: 3, fat: 4, fiber: 5, potass: 6, protein: 7, rating: 8, shelf: 9, sodium: 10, sugars: 11, vitamins: 12, weight: 13,
