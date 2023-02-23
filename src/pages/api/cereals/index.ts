@@ -1,8 +1,28 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
+import { z } from "zod";
 import PrismaCerealRepo from "src/server/infra/prisma-cereal-repo";
 import CreateCerealUsecase from "src/server/usecase/create-cereal-usecase";
 import GetAllCerealsUsecase from "src/server/usecase/get-all-cereals-usecase"
+
+const postRequestSchema = z.object({
+  name: z.string(),
+  mfr: z.string(),
+  type: z.number(),
+  calories: z.number(),
+  protein: z.number(),
+  fat: z.number(),
+  sodium: z.number(),
+  fiber: z.number(),
+  carbo: z.number(),
+  sugars: z.number(),
+  potass: z.number(),
+  vitamins: z.number(),
+  shelf: z.number(),
+  weight: z.number(),
+  cups: z.number(),
+  rating: z.number(),
+})
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,6 +43,10 @@ export default async function handler(
       break;
     case 'POST':
       const createUsecase = new CreateCerealUsecase(new PrismaCerealRepo())
+      if (!postRequestSchema.safeParse(req.body)) {
+        res.status(400).send("Bad Request")
+        break
+      }
       try {
         await createUsecase.handle({
           name: req.body.name,

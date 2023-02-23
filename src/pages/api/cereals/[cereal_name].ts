@@ -1,10 +1,32 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
+import { z } from "zod";
 import NotFoundError from "src/server/domain/error/not-found-error";
 import PrismaCerealRepo from "src/server/infra/prisma-cereal-repo";
 import DeleteCerealUsecase from "src/server/usecase/delete-cereal-usecase";
 import GetCerealUsecase from "src/server/usecase/get-cereal-usecase";
 import UpdateCerealUsecase from "src/server/usecase/update-cereal-usecase";
+
+const putRequestSchema = z.object({
+  name: z.string(),
+  mfr: z.string(),
+  type: z.number(),
+  calories: z.number(),
+  protein: z.number(),
+  fat: z.number(),
+  sodium: z.number(),
+  fiber: z.number(),
+  carbo: z.number(),
+  sugars: z.number(),
+  potass: z.number(),
+  vitamins: z.number(),
+  shelf: z.number(),
+  weight: z.number(),
+  cups: z.number(),
+  rating: z.number(),
+})
+
+const cerealNameSchema = z.string()
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,6 +38,10 @@ export default async function handler(
   switch (method) {
     case 'GET':
       const getUsecase = new GetCerealUsecase(new PrismaCerealRepo())
+      if (!cerealNameSchema.safeParse(String(cereal_name))) {
+        res.status(400).send("Bad Request")
+        break
+      }
       try {
         const cereal = await getUsecase.handle(String(cereal_name))
         res.status(200).json(cereal)
@@ -30,6 +56,10 @@ export default async function handler(
       break;
     case 'PUT':
       const updateUsecase = new UpdateCerealUsecase(new PrismaCerealRepo())
+      if (!putRequestSchema.safeParse(req.body) && !cerealNameSchema.safeParse(String(cereal_name))) {
+        res.status(400).send("Bad Request")
+        break
+      }
       try {
         await updateUsecase.handle({
           name: String(cereal_name),
@@ -61,6 +91,10 @@ export default async function handler(
       break;
     case 'DELETE':
       const deleteUsecase = new DeleteCerealUsecase(new PrismaCerealRepo())
+      if (!cerealNameSchema.safeParse(String(cereal_name))) {
+        res.status(400).send("Bad Request")
+        break
+      }
       try {
         await deleteUsecase.handle(String(cereal_name))
         res.status(200).send("Success")
